@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+}
+
+.container {
+    position: relative;
+    max-width: 600px;
+    width: 100%;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.form {
+    margin-top: 30px;
+}
+
+.form .page {
+    display: none;
+}
+
+.form .page.active {
+    display: block;
+}
+
+.form .page .title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form .page .field {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.form .page .field label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #666;
+}
+
+.form .page .field input,
+.form .page .field select,
+.form .page .field textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.form .page .field input:focus,
+.form .page .field select:focus,
+.form .page .field textarea:focus {
+    border-color: #667eea;
+}
+
+.form .page .btns {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.form .page .btns button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.form .page .btns .prev {
+    background: #94a3b8;
+}
+
+.form .page .btns .next,
+.form .page .btns .submit {
+    background: #667eea;
+}
+
+.form .page .btns button:hover {
+    opacity: 0.8;
+}
+
+.progress-bar {
+    display: flex;
+    margin: 40px 0;
+    user-select: none;
+}
+
+.progress-bar .step {
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+
+.progress-bar .step p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.progress-bar .step .bullet {
+    position: relative;
+    height: 30px;
+    width: 30px;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.progress-bar .step .bullet.active {
+    border-color: #667eea;
+    background: #667eea;
+}
+
+.progress-bar .step .bullet span {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #999;
+    line-height: 26px;
+}
+
+.progress-bar .step .bullet.active span {
+    color: #fff;
+}
+
+.progress-bar .step:not(:last-child) .bullet::before,
+.progress-bar .step:not(:last-child) .bullet::after {
+    position: absolute;
+    content: '';
+    bottom: 11px;
+    right: -110px;
+    height: 3px;
+    width: 100px;
+    background: #ddd;
+}
+
+.progress-bar .step .bullet.active::after {
+    background: #667eea;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: animate 0.3s linear forwards;
+}
+
+@keyframes animate {
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+.alert {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: none;
+}
+
+.alert.error {
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    display: block;
+}
+
+.alert.success {
+    background: #dcfce7;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+    display: block;
+}
+
+@media (max-width: 480px) {
+    .form .page .btns {
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+    
+    .form .page .btns button {
+        width: 100%;
+    }
+}

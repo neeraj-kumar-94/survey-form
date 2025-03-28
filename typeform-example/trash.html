@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typeform-like Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            height: 500px;
+        }
+        
+        .form-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .form-slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+            z-index: 10;
+        }
+        
+        .question {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 400;
+        }
+        
+        .input-group {
+            margin-bottom: 30px;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #4a00e0;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .btn {
+            background-color: #4a00e0;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-self: flex-end;
+        }
+        
+        .btn:hover {
+            background-color: #3700b3;
+        }
+        
+        .progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background-color: #4a00e0;
+            transition: width 0.5s ease;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .option {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            border-color: #4a00e0;
+            background-color: #f8f6ff;
+        }
+        
+        .thank-you {
+            text-align: center;
+        }
+        
+        .thank-you h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #4a00e0;
+        }
+        
+        .thank-you p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="progress-bar" id="progressBar"></div>
+        
+        <!-- Slide 1 - Welcome -->
+        <div class="form-slide active" id="slide1">
+            <h1 class="question">Welcome to our survey! What's your name?</h1>
+            <div class="input-group">
+                <input type="text" id="name" placeholder="Your name">
+            </div>
+            <button class="btn" onclick="nextSlide(2)">Next</button>
+        </div>
+        
+        <!-- Slide 2 - Email -->
+        <div class="form-slide" id="slide2">
+            <h1 class="question">Hi <span id="namePreview"></span>! What's your email?</h1>
+            <div class="input-group">
+                <input type="email" id="email" placeholder="your.email@example.com">
+            </div>
+            <button class="btn" onclick="nextSlide(3)">Next</button>
+        </div>
+        
+        <!-- Slide 3 - Multiple Choice -->
+        <div class="form-slide" id="slide3">
+            <h1 class="question">How did you hear about us?</h1>
+            <div class="options-container">
+                <div class="option" onclick="selectOption(this, 'social')">Social Media</div>
+                <div class="option" onclick="selectOption(this, 'friend')">Friend or Family</div>
+                <div class="option" onclick="selectOption(this, 'search')">Search Engine</div>
+                <div class="option" onclick="selectOption(this, 'other')">Other</div>
+            </div>
+            <button class="btn" onclick="nextSlide(4)" id="slide3Btn" disabled>Next</button>
+        </div>
+        
+        <!-- Slide 4 - Rating -->
+        <div class="form-slide" id="slide4">
+            <h1 class="question">On a scale of 1-10, how likely are you to recommend us?</h1>
+            <div class="input-group">
+                <select id="rating">
+                    <option value="" disabled selected>Select a rating</option>
+                    <option value="1">1 - Not at all likely</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5 - Neutral</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10 - Extremely likely</option>
+                </select>
+            </div>
+            <button class="btn" onclick="nextSlide(5)">Next</button>
+        </div>
+        
+        <!-- Slide 5 - Open-ended -->
+        <div class="form-slide" id="slide5">
+            <h1 class="question">Any additional comments or feedback?</h1>
+            <div class="input-group">
+                <textarea id="comments" placeholder="Your thoughts..."></textarea>
+            </div>
+            <button class="btn" onclick="nextSlide(6)">Submit</button>
+        </div>
+        
+        <!-- Slide 6 - Thank You -->
+        <div class="form-slide" id="slide6">
+            <div class="thank-you">
+                <h1>Thank You!</h1>
+                <p>We appreciate you taking the time to complete our survey.</p>
+                <button class="btn" onclick="resetForm()">Start Over</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 6;
+        
+        function updateProgress() {
+            const progress = (currentSlide / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+        
+        function nextSlide(slideNumber) {
+            // Validate current slide before proceeding
+            if (slideNumber === 2 && !document.getElementById('name').value.trim()) {
+                alert('Please enter your name');
+                return;
+            }
+            
+            if (slideNumber === 3 && !document.getElementById('email').value.trim()) {
+                alert('Please enter your email');
+                return;
+            }
+            
+            if (slideNumber === 5 && !document.getElementById('rating').value) {
+                alert('Please select a rating');
+                return;
+            }
+            
+            // Update name preview
+            if (slideNumber === 2) {
+                document.getElementById('namePreview').textContent = document.getElementById('name').value;
+            }
+            
+            // Hide current slide
+            document.getElementById(`slide${currentSlide}`).classList.remove('active');
+            
+            // Show next slide
+            document.getElementById(`slide${slideNumber}`).classList.add('active');
+            
+            currentSlide = slideNumber;
+            updateProgress();
+        }
+        
+        function selectOption(element, value) {
+            // Remove selected class from all options
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selected class to clicked option
+            element.classList.add('selected');
+            
+            // Enable next button
+            document.getElementById('slide3Btn').disabled = false;
+        }
+        
+        function resetForm() {
+            // Hide current slide
+            document.getElementById(`slide${currentSlide}`).classList.remove('active');
+            
+            // Reset form values
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('rating').value = '';
+            document.getElementById('comments').value = '';
+            
+            // Reset options
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            document.getElementById('slide3Btn').disabled = true;
+            
+            // Show first slide
+            document.getElementById('slide1').classList.add('active');
+            currentSlide = 1;
+            updateProgress();
+        }
+        
+        // Initialize progress bar
+        updateProgress();
+        
+        // Allow pressing Enter to proceed on text inputs
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && currentSlide < 6) {
+                nextSlide(currentSlide + 1);
+            }
+        });
+    </script>
+</body>
+</html>

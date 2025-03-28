@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey form</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="progress-bar">
+            <div class="step">
+                <p>Usage</p>
+                <div class="bullet active">
+                    <span>1</span>
+                </div>
+            </div>
+            <div class="step">
+                <p>Experience</p>
+                <div class="bullet">
+                    <span>2</span>
+                </div>
+            </div>
+            <div class="step">
+                <p>Suggestions</p>
+                <div class="bullet">
+                    <span>3</span>
+                </div>
+            </div>
+        </div>
+        <div class="form">
+            <div class="page active">
+                <div class="title">Product Usage</div>
+                <div class="alert"></div>
+                <div class="field">
+                    <label>How long have you been using our product?</label>
+                    <select name="usage_duration" required>
+                        <option value="">Select duration</option>
+                        <option value="less_than_month">Less than a month</option>
+                        <option value="1_6_months">1-6 months</option>
+                        <option value="6_12_months">6-12 months</option>
+                        <option value="more_than_year">More than a year</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>How often do you use our product?</label>
+                    <select name="usage_frequency" required>
+                        <option value="">Select frequency</option>
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="rarely">Rarely</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Which features do you use most often?</label>
+                    <textarea name="features" required placeholder="Please list the main features you use"></textarea>
+                </div>
+                <div class="btns">
+                    <button class="next">Next</button>
+                </div>
+            </div>
+
+            <div class="page">
+                <div class="title">User Experience</div>
+                <div class="alert"></div>
+                <div class="field">
+                    <label>How easy is it to navigate our product?</label>
+                    <select name="ease_of_use" required>
+                        <option value="">Select rating</option>
+                        <option value="very_easy">Very Easy</option>
+                        <option value="easy">Easy</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="difficult">Difficult</option>
+                        <option value="very_difficult">Very Difficult</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>How would you rate the product's performance?</label>
+                    <select name="performance" required>
+                        <option value="">Select rating</option>
+                        <option value="excellent">Excellent</option>
+                        <option value="good">Good</option>
+                        <option value="average">Average</option>
+                        <option value="poor">Poor</option>
+                        <option value="very_poor">Very Poor</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>What challenges have you faced while using our product?</label>
+                    <textarea name="challenges" required placeholder="Please describe any issues or difficulties"></textarea>
+                </div>
+                <div class="btns">
+                    <button class="prev">Previous</button>
+                    <button class="next">Next</button>
+                </div>
+            </div>
+
+            <div class="page">
+
+    <script src="./script.js"></script>
+</body>
+          
+</html>

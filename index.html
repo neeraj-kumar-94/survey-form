@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <!-- <div class="form-section">
+        <div class="form-inner-section">
+            <form action="#">
+                <div class=""></div>
+            </form>
+        </div>
+    </div> -->
+
+    <form id="contactForm">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <textarea name="message" placeholder="Message" required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+    
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let formData = new FormData(this);
+            let data = {};
+            formData.forEach((value, key) => { data[key] = value });
+    
+            fetch("https://script.google.com/macros/s/AKfycbyxlswzAa2LCJHkhjE5Ieull9TDuQVYhqjtAhEEI98DMzzzUaQLOcuz1jC1K9KSRbvW/exec", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: { "Content-Type": "application/json" }
+            })
+            .then(response => response.text())
+            .then(data => alert("Form submitted successfully!"))
+            .catch(error => alert("Error: " + error));
+        });
+    </script>
+    
+    
+    <!-- Link Js file -->
+     <script src="./script.js"></script>
+</body>
+</html>
