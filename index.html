@@ -19,6 +19,7 @@
     <form id="contactForm">
         <input type="text" name="name" placeholder="Name" required>
         <input type="email" name="email" placeholder="Email" required>
+        <input type="tel" name="tel" placeholder="Telephone" required>
         <textarea name="message" placeholder="Message" required></textarea>
         <button type="submit">Submit</button>
     </form>
@@ -30,8 +31,9 @@
             let data = {};
             formData.forEach((value, key) => { data[key] = value });
     
-            fetch("https://script.google.com/macros/s/AKfycbyZoufMpj5_U-payhG88NFYQqXSsrQSnpZIsh95QfjhhDjodWdQ-3UAxxaPqRGYIuba/exec", {
+            fetch("https://script.google.com/macros/s/AKfycbwxgV9OqMcLXqGlry0uCF9yLsjBkOplhBgxH7zTjrlz2Ut5TH1PHM3rOKReKyJ9KYZd/exec", {
                 method: "POST",
+                mode: "no-cors",
                 body: JSON.stringify(data),
                 headers: { "Content-Type": "application/json" }
             })
